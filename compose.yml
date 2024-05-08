@@ -19,18 +19,31 @@ x-restart: &restart
 services:
   #------------------------------------
   web:
+    depends_on:
+      - mysql
     build:
       context: .
       dockerfile: ./Dockerfile.python
+    #network_mode: bridge
     networks:
       backend:
         ipv4_address: 172.20.0.5
-    depends_on:
+    ports: ["5000"]
+    # ports:
+    #   - "127.0.0.1:5000:5000"
+    #  - "172.20.0.5:5000:5000"
+    #<<: [*deploy-dev, *env_file, *restart]
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE}
+    links:
       - mysql
 
   #-----------------------------------
   mysql:
-    #image: mariadb:10.6.4-focal
     image: mysql:8
     #command: "--default-authentication-plugin=mysql_native_password"
     volumes:
@@ -39,13 +52,18 @@ services:
       backend:
         ipv4_address: 172.20.0.10
     ports: ["3306:3306"]
+    # ports:
+    #   - "127.0.0.1:3306:3306"
+    #  - "172.20.0.10:3306:3306"
+    # expose:
+    #   - "3306"
     <<: [*deploy-dev, *env_file, *restart]
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_HOST="%"
+    #environment:
+    # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    # - MYSQL_DATABASE=wordpress
+    # - MYSQL_USER=wordpress
+    # - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    # - MYSQL_ROOT_HOST=web
 #--------------------------
 volumes:
   db_data: {}
