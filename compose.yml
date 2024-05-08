@@ -32,7 +32,7 @@ services:
     # ports:
     #   - "127.0.0.1:5000:5000"
     #  - "172.20.0.5:5000:5000"
-    #<<: [*deploy-dev, *env_file, *restart]
+    <<: [*deploy-dev, *env_file, *restart]
     environment:
       - DB_HOST=mysql
       - DB_PORT=3306
@@ -58,12 +58,12 @@ services:
     # expose:
     #   - "3306"
     <<: [*deploy-dev, *env_file, *restart]
-    #environment:
-    # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    # - MYSQL_DATABASE=wordpress
-    # - MYSQL_USER=wordpress
-    # - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    # - MYSQL_ROOT_HOST=web
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      #- MYSQL_ROOT_HOST=web
 #--------------------------
 volumes:
   db_data: {}
