@@ -24,7 +24,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.python
-    #network_mode: bridge
     networks:
       backend:
         ipv4_address: 172.20.0.5
@@ -58,12 +57,13 @@ services:
     # expose:
     #   - "3306"
     <<: [*deploy-dev, *env_file, *restart]
-    environment:
+    environment:  
+    # Needs to create a fresh DB
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      #- MYSQL_ROOT_HOST=web
+      - MYSQL_ROOT_HOST="%" # Needs to get a root access via command line
 #--------------------------
 volumes:
   db_data: {}
