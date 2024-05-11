@@ -23,4 +23,6 @@ Docker save(не получилось. пробовал двумя способ�
 ![save.2](./screnshots/task-5.6-docker-save-2.png)
 
 Команды взяты из документации(+ Евгений подсказал):[Docker docs](https://docs.docker.com/reference/cli/docker/image/save/)
-
+## Задача 6.1
+Docker cp:
+![docker_cp](./screnshots/task-5.6.1.png)
