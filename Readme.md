@@ -1,5 +1,5 @@
 ## Задача 0
-Docker compose insted of docker-compose:
+Docker compose insted of docker-compose:\
 ![Docker-compose](./screnshots/task-5.0.png)
 ## Задача 1
 Starting and testing project:
